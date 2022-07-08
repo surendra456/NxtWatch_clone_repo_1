@@ -17,7 +17,7 @@ const Header = () => (
       alt=""
     />
     <LeftContainer>
-      <FaMoon stroke-width="21" />
+      <FaMoon />
       <ProfileImg
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
         alt="profile"
