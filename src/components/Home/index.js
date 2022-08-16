@@ -81,8 +81,8 @@ class Home extends Component {
   }
 
   onKeydownInput = event => {
-    if (event.Key === 'Enter') {
-      this.getVideos()
+    if (event.KeyCode === 13) {
+      this.setState({search: event.target.value}, this.getVideos())
     }
   }
 
@@ -130,9 +130,7 @@ class Home extends Component {
         <SearchNotPara>
           Try different keyword or remove search filters
         </SearchNotPara>
-        <FailureButton type="button" onClick={this.onSearchResult()}>
-          Retry
-        </FailureButton>
+        <FailureButton type="button">Retry</FailureButton>
       </SearchNotConatainer>
     )
   }

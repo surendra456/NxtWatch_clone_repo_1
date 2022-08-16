@@ -1,27 +1,25 @@
 import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
-import {AiFillFire} from 'react-icons/ai'
+import {SiYoutubegaming} from 'react-icons/si'
+
+import Header from '../Header'
+import Sidebar from '../Sidebar'
+import GamingItem from '../GamingItem'
 
 import {
   BottomContainer,
-  TradingContainer,
+  LoaderContainer,
   FailureContainer,
   ImageTag,
   FailureHead,
   FailurePara,
   FailureButton,
-  LoaderContainer,
-  TrendingItems,
-  HeadItem,
+  GamingContainerR,
   Head,
-  Icon,
-  TrendingVideoContainer,
+  HeadContainer,
+  ItemsContainer,
 } from './styledComponents'
-
-import Header from '../Header'
-import Sidebar from '../Sidebar'
-import VideoContainer from '../TrendingVideoContainer'
 
 const apiStatusConstants = {
   initial: 'INITIAL',
@@ -30,18 +28,18 @@ const apiStatusConstants = {
   inProgress: 'IN_PROGRESS',
 }
 
-class TrendingContainer extends Component {
-  state = {apiStatus: apiStatusConstants.inProgress, videoList: []}
+class GamingContainer extends Component {
+  state = {videoList: [], apiStatus: apiStatusConstants.initial}
 
   componentDidMount() {
-    this.getTrendingVideos()
+    this.getGamingVideos()
   }
 
-  getTrendingVideos = async () => {
+  getGamingVideos = async () => {
     this.setState({apiStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
 
-    const apiUrl = 'https://apis.ccbp.in/videos/trending'
+    const apiUrl = 'https://apis.ccbp.in/videos/gaming'
     const options = {
       headers: {
         Authorization: `Bearer ${jwtToken}`,
@@ -49,20 +47,16 @@ class TrendingContainer extends Component {
       method: 'GET',
     }
     const response = await fetch(apiUrl, options)
-
     if (response.ok === true) {
       const data = await response.json()
-      const upadatedData = data.videos.map(each => ({
+      const updatedData = data.videos.map(each => ({
         id: each.id,
-        publishedAt: each.published_at,
-        thumbnailUrl: each.thumbnail_url,
         title: each.title,
+        thumbnailUrl: each.thumbnail_url,
         viewCount: each.view_count,
-        name: each.channel.name,
-        profileImageUrl: each.channel.profile_image_url,
       }))
       this.setState({
-        videoList: upadatedData,
+        videoList: updatedData,
         apiStatus: apiStatusConstants.success,
       })
     } else {
@@ -70,13 +64,13 @@ class TrendingContainer extends Component {
     }
   }
 
-  renderTrendingLoadingView = () => (
+  renderGamingLoadingView = () => (
     <LoaderContainer data-testid="loader">
       <Loader type="ThreeDots" color="#000000" height="50" width="50" />
     </LoaderContainer>
   )
 
-  renderTrendingFailureView = () => (
+  renderGamingFailureView = () => (
     <FailureContainer>
       <ImageTag
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
@@ -90,36 +84,34 @@ class TrendingContainer extends Component {
     </FailureContainer>
   )
 
-  renderVideosListView = () => {
+  renderGamingVideosListView = () => {
     const {videoList} = this.state
-    console.log(videoList)
+
     return (
-      <TrendingItems>
-        <HeadItem>
-          <Icon>
-            <AiFillFire color="red" fontSize="2em" />
-          </Icon>
-          <Head>Trending</Head>
-        </HeadItem>
-        <TrendingVideoContainer>
-          {videoList.map(eachItem => (
-            <VideoContainer item={eachItem} key={eachItem.id} />
+      <GamingContainerR>
+        <HeadContainer>
+          <SiYoutubegaming color="red" fontSize="2em" />
+          <Head>Gaming</Head>
+        </HeadContainer>
+        <ItemsContainer>
+          {videoList.map(each => (
+            <GamingItem item={each} key={each.id} />
           ))}
-        </TrendingVideoContainer>
-      </TrendingItems>
+        </ItemsContainer>
+      </GamingContainerR>
     )
   }
 
-  renderTrendingVideos = () => {
+  renderGamingVideos = () => {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.success:
-        return this.renderVideosListView()
+        return this.renderGamingVideosListView()
       case apiStatusConstants.failure:
-        return this.renderTrendingFailureView()
+        return this.renderGamingFailureView()
       case apiStatusConstants.inProgress:
-        return this.renderTrendingLoadingView()
+        return this.renderGamingLoadingView()
       default:
         return null
     }
@@ -131,11 +123,11 @@ class TrendingContainer extends Component {
         <Header />
         <BottomContainer>
           <Sidebar />
-          <TradingContainer>{this.renderTrendingVideos()}</TradingContainer>
+          {this.renderGamingVideos()}
         </BottomContainer>
       </>
     )
   }
 }
 
-export default TrendingContainer
+export default GamingContainer
