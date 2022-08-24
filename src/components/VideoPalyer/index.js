@@ -1,5 +1,6 @@
 import {Component} from 'react'
 import ReactPlayer from 'react-player'
+
 import Loader from 'react-loader-spinner'
 import Cookies from 'js-cookie'
 import {formatDistanceToNow} from 'date-fns'
@@ -9,6 +10,8 @@ import {
   AiOutlineDislike,
   AiOutlineMenuFold,
 } from 'react-icons/ai'
+
+import NxtContext from '../../context/NxtContext'
 
 import Header from '../Header'
 import Sidebar from '../Sidebar'
@@ -36,7 +39,7 @@ import {
   Logo,
   NameAndCount,
   Name,
-  ContSub,
+  CountSubcribers,
   Description,
 } from './styledComponents'
 
@@ -48,13 +51,20 @@ const apiStatusConstants = {
 }
 
 class VideoPlayer extends Component {
-  state = {videoLink: [], apiStatus: apiStatusConstants.success}
+  state = {
+    videoLink: [],
+    apiStatus: apiStatusConstants.initial,
+    likeActive: false,
+    dislikeActive: false,
+    savedActive: false,
+  }
 
   componentDidMount() {
     this.getVideoItem()
   }
 
   getVideoItem = async () => {
+    this.setState({apiStatus: apiStatusConstants.inProgress})
     const jwtToken = Cookies.get('jwt_token')
     const {match} = this.props
     const {params} = match
@@ -91,55 +101,98 @@ class VideoPlayer extends Component {
     }
   }
 
-  renderVideosListView = () => {
-    const {videoLink} = this.state
-    const {
-      title,
-      videoUrl,
-      viewCount,
-      publishedAt,
-      description,
-      name,
-      profileImageUrl,
-      subscriberCount,
-    } = videoLink
-
-    return (
-      <VideoContainer>
-        <ReactPlayer url={videoUrl} controls width="720px" height="420px" />
-        <Head>{title}</Head>
-        <ItemsContainer>
-          <Content>
-            <Count>{viewCount} Views</Count>
-            <Time>{publishedAt}</Time>
-          </Content>
-          <ContentItem>
-            <IntractionItem>
-              <AiOutlineLike />
-              <IntraName>Like</IntraName>
-            </IntractionItem>
-            <IntractionItem>
-              <AiOutlineDislike />
-              <IntraName>Dislike</IntraName>
-            </IntractionItem>
-            <IntractionItem>
-              <AiOutlineMenuFold />
-              <IntraName>Save</IntraName>
-            </IntractionItem>
-          </ContentItem>
-        </ItemsContainer>
-        <Line />
-        <LogoAndComment>
-          <Logo src={profileImageUrl} alt="" />
-          <NameAndCount>
-            <Name>{name}</Name>
-            <ContSub>{subscriberCount} subscribers</ContSub>
-          </NameAndCount>
-        </LogoAndComment>
-        <Description>{description}</Description>
-      </VideoContainer>
-    )
+  activeLiked = () => {
+    this.setState(prevState => ({
+      likeActive: !prevState.likeActive,
+      dislikeActive: false,
+    }))
   }
+
+  activeDisLiked = () => {
+    this.setState(prevState => ({
+      dislikeActive: !prevState.dislikeActive,
+      likeActive: false,
+    }))
+  }
+
+  activeSaved = () => {
+    this.setState(prevState => ({
+      savedActive: !prevState.savedActive,
+      dislikeActive: false,
+      likeActive: false,
+    }))
+  }
+
+  renderVideosListView = () => (
+    <NxtContext.Consumer>
+      {value => {
+        const {videoLink, likeActive, dislikeActive, savedActive} = this.state
+        const {
+          title,
+          videoUrl,
+          viewCount,
+          publishedAt,
+          description,
+          name,
+          profileImageUrl,
+          subscriberCount,
+        } = videoLink
+
+        const likeColor = likeActive ? '#2563eb' : '#64748b'
+        const dislikeColor = dislikeActive ? '#2563eb' : '#64748b'
+        const savedColor = savedActive ? '#2563eb' : '#64748b'
+        const savedText = savedActive ? 'Saved' : 'Save'
+
+        return (
+          <VideoContainer>
+            <ReactPlayer url={videoUrl} controls width="720px" height="420px" />
+            <Head>{title}</Head>
+            <ItemsContainer>
+              <Content>
+                <Count>{viewCount} Views</Count>
+                <Time>{publishedAt}</Time>
+              </Content>
+              <ContentItem>
+                <IntractionItem type="button">
+                  <AiOutlineLike
+                    size="25"
+                    onClick={this.activeLiked}
+                    color={likeColor}
+                  />
+                  <IntraName>Like</IntraName>
+                </IntractionItem>
+                <IntractionItem>
+                  <AiOutlineDislike
+                    size="25"
+                    onClick={this.activeDisLiked}
+                    color={dislikeColor}
+                  />
+                  <IntraName>Dislike</IntraName>
+                </IntractionItem>
+                <IntractionItem>
+                  <AiOutlineMenuFold
+                    size="25"
+                    onClick={this.activeSaved}
+                    color={savedColor}
+                  />
+                  <IntraName>Save</IntraName>
+                </IntractionItem>
+              </ContentItem>
+            </ItemsContainer>
+            <Line />
+            <LogoAndComment>
+              <Logo src={profileImageUrl} alt="" />
+              <NameAndCount>
+                <Name>{name}</Name>
+                <CountSubcribers>{subscriberCount} subscribers</CountSubcribers>
+              </NameAndCount>
+            </LogoAndComment>
+            <Description>{description}</Description>
+          </VideoContainer>
+        )
+      }}
+    </NxtContext.Consumer>
+  )
 
   renderLoadingView = () => (
     <LoaderContainer data-testid="loader">

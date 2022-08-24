@@ -8,23 +8,67 @@ import TrendingContainer from './components/TrendingContainer'
 import GamingContainer from './components/GamingContainer'
 import SavedVideos from './components/SavedVideos'
 import VideoPlayer from './components/VideoPalyer'
+
 import './App.css'
 
 // Replace your code here
 class App extends Component {
-  state = {isDark: false}
+  state = {videoList: [], isDarkTheme: false}
+
+  toggleTheme = () => {
+    this.setState(prevState => ({
+      isDarkTheme: !prevState.isDarkTheme,
+    }))
+  }
+
+  addVideoItem = product => {
+    const {videoList} = this.state
+    const productObject = videoList.find(
+      eachCartItem => eachCartItem.id === product.id,
+    )
+
+    if (productObject) {
+      this.setState(prevState => ({
+        videoList: prevState.videoList.map(eachCartItem => {
+          if (productObject.id === eachCartItem.id) {
+            return {...eachCartItem}
+          }
+
+          return eachCartItem
+        }),
+      }))
+    } else {
+      const updatedCartList = [...videoList, product]
+      this.setState({videoList: updatedCartList})
+    }
+  }
 
   render() {
-    const {isDark} = this.state
+    const {videoList, isDarkTheme} = this.state
+
     return (
-      <Switch>
-        <Route exact path="/login" component={LoginForm} />
-        <ProtectedRoute exact path="/" component={Home} />
-        <ProtectedRoute exact path="/trending" component={TrendingContainer} />
-        <ProtectedRoute exact path="/gaming" component={GamingContainer} />
-        <ProtectedRoute exact path="/savedVideos" component={SavedVideos} />
-        <ProtectedRoute exact path="/videos/:id" component={VideoPlayer} />
-      </Switch>
+      <NxtContext.Provider
+        value={{
+          videoList,
+          isDarkTheme,
+          toggleTheme: this.toggleTheme,
+          addVideoItem: this.addVideoItem,
+          removeVideoItem: this.removeVideoItem,
+        }}
+      >
+        <Switch>
+          <Route exact path="/login" component={LoginForm} />
+          <ProtectedRoute exact path="/" component={Home} />
+          <ProtectedRoute
+            exact
+            path="/trending"
+            component={TrendingContainer}
+          />
+          <ProtectedRoute exact path="/gaming" component={GamingContainer} />
+          <ProtectedRoute exact path="/savedVideos" component={SavedVideos} />
+          <ProtectedRoute exact path="/videos/:id" component={VideoPlayer} />
+        </Switch>
+      </NxtContext.Provider>
     )
   }
 }

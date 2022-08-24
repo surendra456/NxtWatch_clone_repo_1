@@ -2,6 +2,7 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import {AiFillFire} from 'react-icons/ai'
+import NxtContext from '../../context/NxtContext'
 
 import {
   BottomContainer,
@@ -127,13 +128,24 @@ class TrendingContainer extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <BottomContainer>
-          <Sidebar />
-          <TradingContainer>{this.renderTrendingVideos()}</TradingContainer>
-        </BottomContainer>
-      </>
+      <NxtContext.Consumer>
+        {value => {
+          const {isDarkTheme} = value
+
+          const bgColor = isDarkTheme ? '#181818' : '#f9f9f9'
+          return (
+            <>
+              <Header />
+              <BottomContainer>
+                <Sidebar />
+                <TradingContainer>
+                  {this.renderTrendingVideos()}
+                </TradingContainer>
+              </BottomContainer>
+            </>
+          )
+        }}
+      </NxtContext.Consumer>
     )
   }
 }

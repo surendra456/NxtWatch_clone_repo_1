@@ -85,11 +85,14 @@ export const ContentItem = styled.div`
   flex-direction: row;
   align-items: center;
 `
-export const IntractionItem = styled.div`
+export const IntractionItem = styled.button`
+  border: none;
+  margin-right: 10px;
+  background-color: transparent;
+  cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-left: 9px;
 `
 export const IntraName = styled.p`
   font-family: 'roboto';
@@ -126,7 +129,7 @@ export const Name = styled.p`
   margin: 0px;
 `
 
-export const ContSub = styled.p`
+export const CountSubcribers = styled.p`
   color: #000000;
   font-family: 'roboto';
 

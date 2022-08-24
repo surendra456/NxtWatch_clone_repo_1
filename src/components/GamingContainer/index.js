@@ -6,7 +6,7 @@ import {SiYoutubegaming} from 'react-icons/si'
 import Header from '../Header'
 import Sidebar from '../Sidebar'
 import GamingItem from '../GamingItem'
-
+import NxtContext from '../../context/NxtContext'
 import {
   BottomContainer,
   LoaderContainer,
@@ -119,13 +119,22 @@ class GamingContainer extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <BottomContainer>
-          <Sidebar />
-          {this.renderGamingVideos()}
-        </BottomContainer>
-      </>
+      <NxtContext.Consumer>
+        {value => {
+          const {isDarkTheme} = value
+          const bgColor = isDarkTheme ? '#181818' : '#f9f9f9'
+
+          return (
+            <>
+              <Header />
+              <BottomContainer>
+                <Sidebar />
+                {this.renderGamingVideos()}
+              </BottomContainer>
+            </>
+          )
+        }}
+      </NxtContext.Consumer>
     )
   }
 }

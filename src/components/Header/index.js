@@ -4,6 +4,7 @@ import styled from 'styled-components'
 
 import Cookies from 'js-cookie'
 import {FaMoon} from 'react-icons/fa'
+import NxtContext from '../../context/NxtContext'
 
 import {
   NavContainer,
@@ -31,46 +32,62 @@ const StyledPopup = styled(Popup)`
   }
 `
 
-const Header = props => {
-  const OnClickLogout = () => {
-    const {history} = props
-    Cookies.remove('jwt_token')
-    history.replace('/login')
-  }
+const Header = props => (
+  <NxtContext.Consumer>
+    {value => {
+      const {isDarkTheme, toggleTheme} = value
 
-  return (
-    <NavContainer>
-      <HeaderLogo
-        src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
-        alt=""
-      />
-      <LeftContainer>
-        <FaMoon />
-        <ProfileImg
-          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
-          alt="profile"
-        />
-        <StyledPopup
-          modal
-          trigger={<LogoutButton type="button">Logout</LogoutButton>}
-        >
-          {close => (
-            <PopupContainer>
-              <Notification>Are you sure you want to logout?</Notification>
-              <ButtonContainer>
-                <CancelButton type="button" onClick={() => close()}>
-                  Cancel
-                </CancelButton>
-                <ConfirmButton type="button" onClick={OnClickLogout}>
-                  Confirm
-                </ConfirmButton>
-              </ButtonContainer>
-            </PopupContainer>
-          )}
-        </StyledPopup>
-      </LeftContainer>
-    </NavContainer>
-  )
-}
+      const onChangeTheme = () => {
+        toggleTheme()
+      }
+
+      const OnClickLogout = () => {
+        const {history} = props
+        Cookies.remove('jwt_token')
+        history.replace('/login')
+      }
+
+      const websiteImageURL = isDarkTheme
+        ? 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-dark-theme-img.png'
+        : 'https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png'
+
+      const bgColor = isDarkTheme ? 'black' : 'white'
+
+      return (
+        <NavContainer>
+          <HeaderLogo
+            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+            alt=""
+          />
+          <LeftContainer>
+            <FaMoon />
+            <ProfileImg
+              src="https://assets.ccbp.in/frontend/react-js/nxt-watch-profile-img.png"
+              alt="profile"
+            />
+            <StyledPopup
+              modal
+              trigger={<LogoutButton type="button">Logout</LogoutButton>}
+            >
+              {close => (
+                <PopupContainer>
+                  <Notification>Are you sure you want to logout?</Notification>
+                  <ButtonContainer>
+                    <CancelButton type="button" onClick={() => close()}>
+                      Cancel
+                    </CancelButton>
+                    <ConfirmButton type="button" onClick={OnClickLogout}>
+                      Confirm
+                    </ConfirmButton>
+                  </ButtonContainer>
+                </PopupContainer>
+              )}
+            </StyledPopup>
+          </LeftContainer>
+        </NavContainer>
+      )
+    }}
+  </NxtContext.Consumer>
+)
 
 export default withRouter(Header)

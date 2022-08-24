@@ -1,50 +1,41 @@
 import styled from 'styled-components'
+// import {Link} from 'react-router-dom'
 
-export const BottomContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`
-export const NoSaved = styled.div`
+export const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  background-color: ${props => props.bgColor};
 `
 
-export const Img = styled.img`
-  width: 70%;
-`
-
-export const NoSavedHead = styled.h1`
-  font-family: 'roboto';
-  color: #000000;
-`
-
-export const NoSavedDec = styled.p`
-  font-family: 'roboto';
-  color: #000000;
-`
-
-export const SavedItems = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-export const HeadItem = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`
-export const Icon = styled.div`
-  padding: 10px;
-`
-
-export const Head = styled.h1`
-  color: #000000;
-  font-family: 'roboto';
-`
-
-export const TrendingVideoContainer = styled.div`
+export const NotFoundContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  height: 100vh;
+  align-items: center;
+  background-color: #fff;
+`
+
+export const Image = styled.img`
+  width: 250px;
+  margin: 10px;
+`
+
+export const Heading = styled.h1`
+  color: black;
+  font-size: 30px;
+  margin: 15px;
+  color: ${props => props.textColor};
+`
+
+export const Desc = styled.p`
+  color: black;
+  font-size: 20px;
+  margin-left: 15px;
+`
+
+export const NavbarLargeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `

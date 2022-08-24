@@ -6,6 +6,7 @@ import {BsSearch} from 'react-icons/bs'
 import VideoCard from '../VideoCard'
 import Header from '../Header'
 import Sidebar from '../Sidebar'
+import NxtContext from '../../context/NxtContext'
 
 import {
   BottomContainer,
@@ -152,26 +153,36 @@ class Home extends Component {
 
   render() {
     return (
-      <>
-        <Header />
-        <BottomContainer>
-          <Sidebar />
-          <DataContainer>
-            <InputContainer>
-              <SearchInput
-                type="search"
-                placeholder="Search"
-                onChange={this.onChangeInput}
-                onKeyDown={this.onKeydownInput}
-              />
-              <SearchButton type="button" onClick={this.onSearchResult}>
-                <BsSearch />
-              </SearchButton>
-            </InputContainer>
-            <VidoesContainer>{this.renderAllVideos()}</VidoesContainer>
-          </DataContainer>
-        </BottomContainer>
-      </>
+      <NxtContext.Consumer>
+        {value => {
+          const {isDarkTheme} = value
+
+          const bgColor = isDarkTheme ? '#181818' : '#f9f9f9'
+
+          return (
+            <>
+              <Header />
+              <BottomContainer>
+                <Sidebar />
+                <DataContainer>
+                  <InputContainer>
+                    <SearchInput
+                      type="search"
+                      placeholder="Search"
+                      onChange={this.onChangeInput}
+                      onKeyDown={this.onKeydownInput}
+                    />
+                    <SearchButton type="button" onClick={this.onSearchResult}>
+                      <BsSearch />
+                    </SearchButton>
+                  </InputContainer>
+                  <VidoesContainer>{this.renderAllVideos()}</VidoesContainer>
+                </DataContainer>
+              </BottomContainer>
+            </>
+          )
+        }}
+      </NxtContext.Consumer>
     )
   }
 }
