@@ -1,13 +1,42 @@
 import styled from 'styled-components'
 
+export const AlignRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`
+
+export const ModalContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+export const CloseButton = styled.button`
+  background-color: transparent;
+  border: none;
+  margin-left: 10px;
+  outline: none;
+  cursor: pointer;
+  border-radius: 10px;
+`
+export const Image = styled.img`
+  width: 300px;
+  margin: 20px;
+`
+
+export const MainContainerHome = styled.div`
+   ;
+`
+
 export const BottomContainer = styled.div`
   display: flex;
   flex-direction: row;
+  height: 745vh;
+  background-color: ${props => props.backgroundColor};
 `
 export const DataContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: -webkit-fill-available;
+  color: ${props => props.backgroundColor};
 `
 export const InputContainer = styled.div`
   display: flex;
@@ -22,10 +51,12 @@ export const SearchInput = styled.input`
   border-width: 0px;
   padding: 2px;
   width: -webkit-fill-available;
+  background-color: ${props => props.backgroundColor};
 `
 
 export const SearchButton = styled.button`
   border-width: 0px;
+  background-color: ${props => props.colorButton};
 `
 export const LoaderContainer = styled.div`
   height: 80vh;

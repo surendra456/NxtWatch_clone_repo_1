@@ -26,46 +26,46 @@ class Sidebar extends Component {
         {value => {
           const {isDarkTheme} = value
 
-          const bgColor = isDarkTheme ? 'black' : '#fff'
-          const linkColor = isDarkTheme ? '#fff' : 'black'
+          const bgColor = isDarkTheme ? 'black' : '#ffffff'
+          const linkColor = isDarkTheme ? '#ffffff' : 'black'
 
           return (
-            <NavBar>
+            <NavBar backgroundColor={bgColor}>
               <TabsItem>
                 <Tab to="/">
                   <AiFillHome />
-                  <Head>Home</Head>
+                  <Head textColor={linkColor}>Home</Head>
                 </Tab>
                 <Tab to="/trending">
                   <AiOutlineFire />
-                  <Head>Trending</Head>
+                  <Head textColor={linkColor}>Trending</Head>
                 </Tab>
                 <Tab to="/gaming">
                   <AiFillHeart />
-                  <Head>Gaming</Head>
+                  <Head textColor={linkColor}>Gaming</Head>
                 </Tab>
                 <Tab to="/savedvideos">
                   <AiOutlineBars />
-                  <Head>Saved Videos</Head>
+                  <Head textColor={linkColor}>Saved Videos</Head>
                 </Tab>
               </TabsItem>
               <SideBarHeadBelow>
-                <HeaderBelow>CONTACT US</HeaderBelow>
+                <HeaderBelow textColor={linkColor}>CONTACT US</HeaderBelow>
                 <SocialContainer>
                   <SocialImage
                     src="https://assets.ccbp.in/frontend/react-js/nxt-watch-facebook-logo-img.png "
-                    alt="logo"
+                    alt="facebook logo"
                   />
                   <SocialImage
                     src="https://assets.ccbp.in/frontend/react-js/nxt-watch-twitter-logo-img.png "
-                    alt="logo"
+                    alt="twitter logo"
                   />
                   <SocialImage
                     src="https://assets.ccbp.in/frontend/react-js/nxt-watch-linked-in-logo-img.png"
-                    alt="logo"
+                    alt="linked in logo"
                   />
                 </SocialContainer>
-                <BelowContent>
+                <BelowContent textColor={linkColor}>
                   Enjoy! Now to See your <br />
                   Channels and <br />
                   recommendations!

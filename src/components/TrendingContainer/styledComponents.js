@@ -5,6 +5,7 @@ export const TradingContainer = styled.div``
 export const BottomContainer = styled.div`
   display: flex;
   flex-direction: row;
+  background-color: ${props => props.backgroundColor};
 `
 export const HeadContainer = styled.div`
   display: flex;
@@ -14,6 +15,7 @@ export const HeadContainer = styled.div`
 export const Head = styled.h1`
   color: #000000;
   font-family: 'roboto';
+  color: ${props => props.color};
 `
 export const LoaderContainer = styled.div`
   height: 80vh;
@@ -65,6 +67,7 @@ export const HeadItem = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: ${props => props.back};
 `
 export const Icon = styled.div`
   padding: 10px;

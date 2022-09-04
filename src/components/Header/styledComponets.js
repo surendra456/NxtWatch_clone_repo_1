@@ -1,15 +1,18 @@
 import styled from 'styled-components'
+import {Link} from 'react-router-dom'
 
 export const NavContainer = styled.nav`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin: 10px;
+  padding: 7px;
+  background-color: ${props => props.themeColor};
 `
 
 export const HeaderLogo = styled.img`
-  width: 10%;
+  height: 28px;
+  width: 115px;
   margin-left: 10px;
 `
 
@@ -31,6 +34,9 @@ export const LogoutButton = styled.button`
   padding-left: 10px;
   font-family: 'roboto';
   font-weight: 600;
+  background-color: ${props => props.themeColor};
+  color : ${props => props.textColor}
+  border-color : ${props => props.textColor}
 `
 export const PopupContainer = styled.div`
   display: flex;
@@ -68,4 +74,10 @@ export const ConfirmButton = styled.button`
   border-width: 0px;
   padding: 7px;
   background-color: #3b82f6;
+`
+export const NavLink = styled(Link)``
+
+export const DarkModeButton = styled.button`
+  background-color: transparent;
+  border-width: 0px;
 `

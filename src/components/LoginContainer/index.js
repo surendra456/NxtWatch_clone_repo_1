@@ -80,7 +80,10 @@ class LoginForm extends Component {
 
     return (
       <LoginContainer>
-        <LogoElement src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png" />
+        <LogoElement
+          src="https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+          alt="website logo"
+        />
         <FormContainer onSubmit={this.onSubmitLoginButton}>
           <Label htmlFor="username">USERNAME</Label>
           <InputElement

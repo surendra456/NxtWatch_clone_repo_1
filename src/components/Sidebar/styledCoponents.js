@@ -6,6 +6,8 @@ export const NavBar = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 90vh;
+  background-color: ${props => props.backgroundColor};
+  padding-right: 15px;
 `
 
 export const TabsItem = styled.div`
@@ -18,6 +20,7 @@ export const Head = styled.label`
   font-family: 'roboto';
   font-weight: 400;
   margin-left: 8px;
+  color: ${props => props.textColor};
 `
 export const Tab = styled(Link)`
   display: flex;
@@ -36,7 +39,7 @@ export const SideBarHeadBelow = styled.div`
 export const HeaderBelow = styled.p`
     font-family : 'roboto'
     font-size : '5px ';
-    
+    color : ${props => props.textColor}
 `
 export const SocialContainer = styled.div`
   display: flex;
@@ -50,4 +53,5 @@ export const SocialImage = styled.img`
 `
 export const BelowContent = styled.p`
   font-family: 'roboto';
+  color: ${props => props.textColor};
 `

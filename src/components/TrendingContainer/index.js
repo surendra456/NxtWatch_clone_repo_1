@@ -81,26 +81,28 @@ class TrendingContainer extends Component {
     <FailureContainer>
       <ImageTag
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure"
+        alt="failure view"
       />
-      <FailureHead>No Search results found</FailureHead>
-      <FailurePara>Try Different Key Words or remove search filter</FailurePara>
+      <FailureHead>Oops! Something Went Wrong</FailureHead>
+      <FailurePara>We are having some trouble</FailurePara>
       <FailureButton type="button" onClick={this.getTrendingVideos}>
         Retry
       </FailureButton>
     </FailureContainer>
   )
 
-  renderVideosListView = () => {
+  renderVideosListView = props => {
     const {videoList} = this.state
-    console.log(videoList)
+    const BgColor = props ? '#181818' : '#ffffff'
+    const fontColor = props ? '#ffffff' : '#000000'
+
     return (
       <TrendingItems>
-        <HeadItem>
+        <HeadItem back={BgColor}>
           <Icon>
             <AiFillFire color="red" fontSize="2em" />
           </Icon>
-          <Head>Trending</Head>
+          <Head color={fontColor}>Trending</Head>
         </HeadItem>
         <TrendingVideoContainer>
           {videoList.map(eachItem => (
@@ -111,12 +113,12 @@ class TrendingContainer extends Component {
     )
   }
 
-  renderTrendingVideos = () => {
+  renderTrendingVideos = props => {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.success:
-        return this.renderVideosListView()
+        return this.renderVideosListView(props)
       case apiStatusConstants.failure:
         return this.renderTrendingFailureView()
       case apiStatusConstants.inProgress:
@@ -132,14 +134,15 @@ class TrendingContainer extends Component {
         {value => {
           const {isDarkTheme} = value
 
-          const bgColor = isDarkTheme ? '#181818' : '#f9f9f9'
+          const bgColor = isDarkTheme ? '#000000' : '#f9f9f9'
+
           return (
             <>
               <Header />
-              <BottomContainer>
+              <BottomContainer backgroundColor={bgColor}>
                 <Sidebar />
                 <TradingContainer>
-                  {this.renderTrendingVideos()}
+                  {this.renderTrendingVideos(isDarkTheme)}
                 </TradingContainer>
               </BottomContainer>
             </>

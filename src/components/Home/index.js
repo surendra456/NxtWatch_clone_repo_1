@@ -3,6 +3,7 @@ import {Component} from 'react'
 import Cookies from 'js-cookie'
 import Loader from 'react-loader-spinner'
 import {BsSearch} from 'react-icons/bs'
+import {IoMdClose} from 'react-icons/io'
 import VideoCard from '../VideoCard'
 import Header from '../Header'
 import Sidebar from '../Sidebar'
@@ -26,6 +27,11 @@ import {
   SearchNotHead,
   SearchNotPara,
   MainContainer,
+  MainContainerHome,
+  CloseButton,
+  ModalContainer,
+  AlignRow,
+  Image,
 } from './styledComponents'
 
 const apiStatusConstants = {
@@ -101,11 +107,11 @@ class Home extends Component {
     <FailureContainer>
       <ImageTag
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure"
+        alt="failure view"
       />
-      <FailureHead>No Search results found</FailureHead>
-      <FailurePara>Try Different Key Words or remove search filter</FailurePara>
-      <FailureButton type="button" onClick={this.onSearchResult()}>
+      <FailureHead>Oops! Something Went Wrong</FailureHead>
+      <FailurePara>We are having some trouble</FailurePara>
+      <FailureButton type="button" onClick={this.onSearchResult}>
         Retry
       </FailureButton>
     </FailureContainer>
@@ -127,9 +133,9 @@ class Home extends Component {
           src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-search-results-img.png"
           alt="no videos"
         />
-        <SearchNotHead>No Search result found</SearchNotHead>
+        <SearchNotHead>No Search results found</SearchNotHead>
         <SearchNotPara>
-          Try different keyword or remove search filters
+          Try different key words or remove search filter
         </SearchNotPara>
         <FailureButton type="button">Retry</FailureButton>
       </SearchNotConatainer>
@@ -157,29 +163,59 @@ class Home extends Component {
         {value => {
           const {isDarkTheme} = value
 
-          const bgColor = isDarkTheme ? '#181818' : '#f9f9f9'
+          const bgColor = isDarkTheme ? '#000000' : '#f9f9f9'
+          const SearchButtonColor = isDarkTheme ? ' #475569' : '#f9f9f9'
 
           return (
-            <>
+            <MainContainerHome>
               <Header />
-              <BottomContainer>
+              <BottomContainer backgroundColor={bgColor}>
                 <Sidebar />
                 <DataContainer>
+                  <ModalContainer>
+                    {close => (
+                      <ModalContainer>
+                        <AlignRow>
+                          <CloseButton
+                            type="button"
+                            data-testid="close"
+                            onClick={() => close()}
+                          >
+                            <IoMdClose size={20} color="#231f20" />
+                          </CloseButton>
+                          <Image
+                            src="https://assets.ccbp.in/frontend/react-js/nxt-watch-banner-bg.png"
+                            alt="banner"
+                          />
+                          <Image
+                            src=" https://assets.ccbp.in/frontend/react-js/nxt-watch-logo-light-theme-img.png"
+                            alt="nxt watch logo"
+                          />
+                        </AlignRow>
+                      </ModalContainer>
+                    )}
+                  </ModalContainer>
                   <InputContainer>
                     <SearchInput
                       type="search"
                       placeholder="Search"
                       onChange={this.onChangeInput}
                       onKeyDown={this.onKeydownInput}
+                      backgroundColor={bgColor}
                     />
-                    <SearchButton type="button" onClick={this.onSearchResult}>
+                    <SearchButton
+                      type="button"
+                      onClick={this.onSearchResult}
+                      colorButton={SearchButtonColor}
+                      data-testid="searchButton"
+                    >
                       <BsSearch />
                     </SearchButton>
                   </InputContainer>
                   <VidoesContainer>{this.renderAllVideos()}</VidoesContainer>
                 </DataContainer>
               </BottomContainer>
-            </>
+            </MainContainerHome>
           )
         }}
       </NxtContext.Consumer>

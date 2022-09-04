@@ -18,7 +18,7 @@ const GamingItem = props => (
 
       return (
         <ItemContainer>
-          <ImageContainer src={thumbnailUrl} alt="" />
+          <ImageContainer src={thumbnailUrl} alt="video thumbnail" />
           <Title>{title}</Title>
           <CountViews>{viewCount} Watching Worldwide</CountViews>
         </ItemContainer>

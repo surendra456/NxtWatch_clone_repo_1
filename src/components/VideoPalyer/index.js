@@ -138,13 +138,21 @@ class VideoPlayer extends Component {
           subscriberCount,
         } = videoLink
 
+        const {addVideoItem, isDarkTheme} = value
+
+        const onAddToCart = () => {
+          addVideoItem({...videoLink})
+        }
+
         const likeColor = likeActive ? '#2563eb' : '#64748b'
         const dislikeColor = dislikeActive ? '#2563eb' : '#64748b'
         const savedColor = savedActive ? '#2563eb' : '#64748b'
         const savedText = savedActive ? 'Saved' : 'Save'
 
+        const bgColor = isDarkTheme ? '#181818' : ' #f9f9f9'
+
         return (
-          <VideoContainer>
+          <VideoContainer backColor={bgColor}>
             <ReactPlayer url={videoUrl} controls width="720px" height="420px" />
             <Head>{title}</Head>
             <ItemsContainer>
@@ -159,7 +167,7 @@ class VideoPlayer extends Component {
                     onClick={this.activeLiked}
                     color={likeColor}
                   />
-                  <IntraName>Like</IntraName>
+                  <IntraName color={likeColor}>Like</IntraName>
                 </IntractionItem>
                 <IntractionItem>
                   <AiOutlineDislike
@@ -167,15 +175,15 @@ class VideoPlayer extends Component {
                     onClick={this.activeDisLiked}
                     color={dislikeColor}
                   />
-                  <IntraName>Dislike</IntraName>
+                  <IntraName color={dislikeColor}>Dislike</IntraName>
                 </IntractionItem>
-                <IntractionItem>
+                <IntractionItem type="button" onClick={onAddToCart}>
                   <AiOutlineMenuFold
                     size="25"
                     onClick={this.activeSaved}
                     color={savedColor}
                   />
-                  <IntraName>Save</IntraName>
+                  <IntraName color={savedColor}>{savedText}</IntraName>
                 </IntractionItem>
               </ContentItem>
             </ItemsContainer>
@@ -204,11 +212,11 @@ class VideoPlayer extends Component {
     <FailureContainer>
       <ImageTag
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure"
+        alt="failure view"
       />
       <FailureHead>Oops! Something Went Wrong</FailureHead>
       <FailurePara>
-        We Are Having some Trouble to complete your request. Please try again
+        We are having some trouble to complete your request. Please try again.
       </FailurePara>
       <FailureButton type="button" onClick={this.getTrendingVideos}>
         Retry

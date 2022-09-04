@@ -37,6 +37,7 @@ export const ProfileImg = styled.img`
   width: 40px;
   height: 40px;
   margin-top: 16px;
+  margin-right: 8px;
 `
 
 export const VideoData = styled.div``
@@ -47,6 +48,7 @@ export const Title = styled.p`
   font-size: 15px;
   margin: 0px;
   margin-top: 16px;
+  color: ${props => props.color};
 `
 export const TitleName = styled.p`
   margin-top: 5px;

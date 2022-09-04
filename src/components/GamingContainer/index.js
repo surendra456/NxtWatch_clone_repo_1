@@ -74,24 +74,26 @@ class GamingContainer extends Component {
     <FailureContainer>
       <ImageTag
         src="https://assets.ccbp.in/frontend/react-js/nxt-watch-failure-view-light-theme-img.png"
-        alt="failure"
+        alt="failure view"
       />
-      <FailureHead>No Search results found</FailureHead>
-      <FailurePara>Try Different Key Words or remove search filter</FailurePara>
+      <FailureHead>Oops! Something Went Wrong</FailureHead>
+      <FailurePara>We are having some trouble</FailurePara>
       <FailureButton type="button" onClick={this.getTrendingVideos}>
         Retry
       </FailureButton>
     </FailureContainer>
   )
 
-  renderGamingVideosListView = () => {
+  renderGamingVideosListView = props => {
     const {videoList} = this.state
+    const BgColor = props ? '#181818' : '#ffffff'
+    const fontColor = props ? '#ffffff' : '#000000'
 
     return (
       <GamingContainerR>
-        <HeadContainer>
+        <HeadContainer back={BgColor}>
           <SiYoutubegaming color="red" fontSize="2em" />
-          <Head>Gaming</Head>
+          <Head color={fontColor}>Gaming</Head>
         </HeadContainer>
         <ItemsContainer>
           {videoList.map(each => (
@@ -102,12 +104,12 @@ class GamingContainer extends Component {
     )
   }
 
-  renderGamingVideos = () => {
+  renderGamingVideos = props => {
     const {apiStatus} = this.state
 
     switch (apiStatus) {
       case apiStatusConstants.success:
-        return this.renderGamingVideosListView()
+        return this.renderGamingVideosListView(props)
       case apiStatusConstants.failure:
         return this.renderGamingFailureView()
       case apiStatusConstants.inProgress:
@@ -122,14 +124,14 @@ class GamingContainer extends Component {
       <NxtContext.Consumer>
         {value => {
           const {isDarkTheme} = value
-          const bgColor = isDarkTheme ? '#181818' : '#f9f9f9'
+          const bgColor = isDarkTheme ? '#000000' : '#f9f9f9'
 
           return (
             <>
               <Header />
-              <BottomContainer>
+              <BottomContainer backgroundColor={bgColor}>
                 <Sidebar />
-                {this.renderGamingVideos()}
+                {this.renderGamingVideos(isDarkTheme)}
               </BottomContainer>
             </>
           )

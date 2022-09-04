@@ -1,5 +1,6 @@
+import {AiFillFire} from 'react-icons/ai'
 import Header from '../Header'
-import VideoCard from '../VideoCard'
+import VideoListView from '../VideoListView'
 import NxtContext from '../../context/NxtContext'
 
 import {
@@ -9,6 +10,7 @@ import {
   MainContainer,
   NavbarLargeContainer,
   Desc,
+  HeadItem,
 } from './styledComponents'
 
 import Sidebar from '../Sidebar'
@@ -18,6 +20,7 @@ const SavedVideos = () => (
     {value => {
       const {videoList, isDarkTheme} = value
       const showEmptyView = videoList.length === 0
+      const bgColorTop = isDarkTheme ? '#181818' : '#ffffff'
       const bgColor = isDarkTheme ? '#181818' : '#f9f9f9'
       const textColor = isDarkTheme ? '#f9f9f9' : '#181818'
 
@@ -28,21 +31,23 @@ const SavedVideos = () => (
             <NavbarLargeContainer>
               <Sidebar />
               {showEmptyView ? (
-                <NotFoundContainer>
+                <NotFoundContainer bgColor={bgColor}>
                   <Image
                     src="https://assets.ccbp.in/frontend/react-js/nxt-watch-no-saved-videos-img.png"
                     alt="no saved videos"
                   />
-                  <Heading className="cart-empty-heading">
-                    No saved videos found
-                  </Heading>
-                  <Desc>You can save your videos while watching them.</Desc>
+                  <Heading color={textColor}>No saved videos found</Heading>
+                  <Desc color={textColor}>
+                    You can save your videos while watching them.
+                  </Desc>
                 </NotFoundContainer>
               ) : (
                 <MainContainer>
-                  <Heading textColor={textColor}>My Saved Videos</Heading>
-
-                  <VideoCard />
+                  <HeadItem back={bgColorTop}>
+                    <AiFillFire color="red" fontSize="2em" />
+                    <Heading color={textColor}>Saved Videos</Heading>
+                  </HeadItem>
+                  <VideoListView />
                 </MainContainer>
               )}
             </NavbarLargeContainer>

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const BottomContainer = styled.div`
   display: flex;
   flex-direction: row;
+  background-color: ${props => props.backgroundColor};
 `
 export const LoaderContainer = styled.div`
   height: 80vh;
@@ -49,12 +50,14 @@ export const GamingContainerR = styled.div`
 export const Head = styled.h1`
   font-family: 'roboto';
   margin-left: 20px;
+  color: ${props => props.color};
 `
 
 export const HeadContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  background-color: ${props => props.back};
 `
 export const ItemsContainer = styled.div`
   display: flex;

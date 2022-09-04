@@ -52,6 +52,8 @@ export const FailureButton = styled.button`
 export const VideoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  width: -webkit-fill-available;
+  background-color: ${props => props.backColor};
 `
 export const Head = styled.p`
     font-family : 'roboto'
@@ -96,9 +98,9 @@ export const IntractionItem = styled.button`
 `
 export const IntraName = styled.p`
   font-family: 'roboto';
-  color: #000000;
   margin-left: 5px;
   padding-right: 3px;
+  color: ${props => props.color};
 `
 export const Line = styled.hr`
   border-style: 'solid';
